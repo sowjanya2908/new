@@ -21,6 +21,11 @@ const YourComponent = () => {
   const [phonenumbererror,setphonenumbererror]= useState('');
 
 
+  const isFormValid : any= () => {
+    return !firstnameerror && !lastnameerror && !passworderror && !addresserror && !emailerror && !phonenumbererror;
+  };
+  console.log('Datasaved:',{name,lastname,password,email,phonenumber});
+  
 /**
  * validations
  */
@@ -206,6 +211,11 @@ const YourComponent = () => {
         {phonenumbererror &&(
           <div style={{color:'#dc3545'}}>{phonenumbererror}</div>  
                 )}
+                <button type= "button"
+                disabled= {true}
+                className="btn btn-outline-primary btn-sm disabled={!isFormValid()" >
+                  Save
+                  </button>
       </form>
     </div>
   );

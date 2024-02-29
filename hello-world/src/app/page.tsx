@@ -179,6 +179,8 @@ const YourComponent = () => {
           onChange={emailchange}
           onBlur={emailchange}
           value={email}
+
+          
           style={{ border: emailerror ? '1px solid #dc3545' : '1px solid #ced4da' }}
           />
           </div>

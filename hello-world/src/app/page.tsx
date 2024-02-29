@@ -20,6 +20,10 @@ const YourComponent = () => {
   const [phonenumber, setphonenumber]= useState('')
   const [phonenumbererror,setphonenumbererror]= useState('');
 
+
+/**
+ * validations
+ */
   const firstnamechange = (e: any) => {
     const value = e?.target?.value
     setname(value);
@@ -64,8 +68,9 @@ const YourComponent = () => {
  const emailchange= (e:any)=>{
   const value=e.target.value
   setemail(value);
-  if (value===''){
-    setemailerror("Email is Reauired")
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(value)){
+    setemailerror("Please Enter a valid email")
   }else{ 
     setemailerror('');
   }}
@@ -84,9 +89,6 @@ const YourComponent = () => {
       setphonenumbererror('');
     }
   };
-  
-  
- 
 
  return (
     <div className='center-container'>
@@ -110,27 +112,26 @@ const YourComponent = () => {
         {firstnameerror && (
           <div style={{ color: '#dc3545' }}>{firstnameerror}</div>
         )}
-
-<div>
-          <label htmlFor="exampleFormControlInput1" className="form-label">
+       <div>
+         <label htmlFor="exampleFormControlInput1" className="form-label">
            LastName:
-          </label>
-          <input
-            type="text"
-            className={`form-control ${lastnameerror ? 'border-danger' : ''}`}
-            id="exampleFormControlInput1"
-            placeholder="Enter name"
-            onChange={lastnamechange}
-            onBlur={lastnamechange}
-            value={lastname}
-            style={{ border: lastnameerror ? '1px solid #dc3545' : '1px solid #ced4da' }}
-          />
-        </div>
-        {lastnameerror && (
-          <div style={{ color: '#dc3545' }}>{lastnameerror}</div>
-        )}
+         </label>
+         <input
+           type="text"
+           className={`form-control ${lastnameerror ? 'border-danger' : ''}`}
+           id="exampleFormControlInput1"
+           placeholder="Enter name"
+           onChange={lastnamechange}
+           onBlur={lastnamechange}
+           value={lastname}
+           style={{ border: lastnameerror ? '1px solid #dc3545' : '1px solid #ced4da' }}
+         />
+       </div>
+       {lastnameerror && (
+         <div style={{ color: '#dc3545' }}>{lastnameerror}</div>
+       )}
 
-<div>
+       <div>
           <label htmlFor="exampleFormControlInput1" className="form-label">
            Password:
           </label>
@@ -180,7 +181,7 @@ const YourComponent = () => {
           onBlur={emailchange}
           value={email}
 
-          
+
           style={{ border: emailerror ? '1px solid #dc3545' : '1px solid #ced4da' }}
           />
           </div>
@@ -211,4 +212,3 @@ const YourComponent = () => {
 };
  
 export default YourComponent;
- 

@@ -12,7 +12,7 @@ const YourComponent = () => {
   const [passworderror, setpassworderror] = useState('');
 
   const [address, setaddress]= useState('')
-  const [addresserror ,setaddreserror ]= useState('');
+  const [addresserror ,setaddresserror ]= useState('');
 
   const [email, setemail]= useState('')
   const [emailerror ,setemailerror]= useState('');
@@ -64,9 +64,9 @@ const YourComponent = () => {
     const value=e.target.value
     setaddress(value);
     if (value ===''){
-      setaddreserror("Address is Required");
+      setaddresserror("Address is Required");
     }else {
-      setaddreserror('');
+      setaddresserror('');
     }
  
   }

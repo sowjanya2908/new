@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react';
+import { adduser } from './api/user';
 
 const YourComponent = () => {
   const [name, setname] = useState('');
@@ -12,7 +13,7 @@ const YourComponent = () => {
   const [passworderror, setpassworderror] = useState('');
 
   const [address, setaddress]= useState('')
-  const [addresserror ,setaddresserror ]= useState('');
+  const [addresserror ,setaddreserror ]= useState('');
 
   const [email, setemail]= useState('')
   const [emailerror ,setemailerror]= useState('');
@@ -21,14 +22,6 @@ const YourComponent = () => {
   const [phonenumbererror,setphonenumbererror]= useState('');
 
 
-  const isFormValid : any= () => {
-    return !firstnameerror && !lastnameerror && !passworderror && !addresserror && !emailerror && !phonenumbererror;
-  };
-  console.log('Datasaved:',{name,lastname,password,email,phonenumber});
-  
-/**
- * validations
- */
   const firstnamechange = (e: any) => {
     const value = e?.target?.value
     setname(value);
@@ -64,18 +57,17 @@ const YourComponent = () => {
     const value=e.target.value
     setaddress(value);
     if (value ===''){
-      setaddresserror("Address is Required");
+      setaddreserror("Address is Required");
     }else {
-      setaddresserror('');
+      setaddreserror('');
     }
  
   }
  const emailchange= (e:any)=>{
   const value=e.target.value
   setemail(value);
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(value)){
-    setemailerror("Please Enter a valid email")
+  if (value===''){
+    setemailerror("Email is Reauired")
   }else{ 
     setemailerror('');
   }}
@@ -94,6 +86,24 @@ const YourComponent = () => {
       setphonenumbererror('');
     }
   };
+  
+  
+ /**
+   *  save method for add user
+   */
+ async function handleSubmit(e: any) {
+  const body =
+  {
+    name: name,
+    email: email,
+    phone: phonenumber,
+  }
+  try {
+    const response = await adduser(body);
+  } catch (error: any) {
+    console.log(error)
+  }
+}
 
  return (
     <div className='center-container'>
@@ -117,26 +127,27 @@ const YourComponent = () => {
         {firstnameerror && (
           <div style={{ color: '#dc3545' }}>{firstnameerror}</div>
         )}
-       <div>
-         <label htmlFor="exampleFormControlInput1" className="form-label">
-           LastName:
-         </label>
-         <input
-           type="text"
-           className={`form-control ${lastnameerror ? 'border-danger' : ''}`}
-           id="exampleFormControlInput1"
-           placeholder="Enter name"
-           onChange={lastnamechange}
-           onBlur={lastnamechange}
-           value={lastname}
-           style={{ border: lastnameerror ? '1px solid #dc3545' : '1px solid #ced4da' }}
-         />
-       </div>
-       {lastnameerror && (
-         <div style={{ color: '#dc3545' }}>{lastnameerror}</div>
-       )}
 
-       <div>
+<div>
+          <label htmlFor="exampleFormControlInput1" className="form-label">
+           LastName:
+          </label>
+          <input
+            type="text"
+            className={`form-control ${lastnameerror ? 'border-danger' : ''}`}
+            id="exampleFormControlInput1"
+            placeholder="Enter name"
+            onChange={lastnamechange}
+            onBlur={lastnamechange}
+            value={lastname}
+            style={{ border: lastnameerror ? '1px solid #dc3545' : '1px solid #ced4da' }}
+          />
+        </div>
+        {lastnameerror && (
+          <div style={{ color: '#dc3545' }}>{lastnameerror}</div>
+        )}
+
+<div>
           <label htmlFor="exampleFormControlInput1" className="form-label">
            Password:
           </label>
@@ -185,8 +196,6 @@ const YourComponent = () => {
           onChange={emailchange}
           onBlur={emailchange}
           value={email}
-
-
           style={{ border: emailerror ? '1px solid #dc3545' : '1px solid #ced4da' }}
           />
           </div>
@@ -211,14 +220,10 @@ const YourComponent = () => {
         {phonenumbererror &&(
           <div style={{color:'#dc3545'}}>{phonenumbererror}</div>  
                 )}
-                <button type= "button"
-                disabled= {true}
-                className="btn btn-outline-primary btn-sm disabled={!isFormValid()" >
-                  Save
-                  </button>
+                <button onClick={handleSubmit}>Save</button>
       </form>
     </div>
   );
-};
- 
+}; 
 export default YourComponent;
+ 
